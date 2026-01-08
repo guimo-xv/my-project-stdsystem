@@ -4,24 +4,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>YALA: The Southern Gem | ยะลา</title>
-    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
         /* --- CSS VARIABLES & RESET --- */
         :root {
-            --primary-bg: #0F2027; /* Dark Green/Blue Black */
+            --primary-bg: #0F2027; 
             --secondary-bg: #203A43;
-            --accent-gold: #D4AF37; /* Luxury Gold */
+            --accent-gold: #D4AF37; 
             --text-light: #Fdfbf7;
             --text-gray: #B0BEC5;
-            --glass: rgba(255, 255, 255, 0.05);
+            --glass-nav: rgba(15, 32, 39, 0.85); /* สีพื้นหลัง Navbar แบบโปร่ง */
+            --glass-card: rgba(255, 255, 255, 0.05);
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            text-decoration: none;
+            list-style: none;
+        }
+
+        html {
+            scroll-behavior: smooth; /* เลื่อนหน้าแบบนุ่มนวล */
         }
 
         body {
@@ -32,50 +41,94 @@
             overflow-x: hidden;
         }
 
-        h1, h2, h3 {
-            font-family: 'Playfair Display', serif; /* Font หัวข้อให้ดูแพง */
+        h1, h2, h3, .nav-logo {
+            font-family: 'Playfair Display', serif;
         }
 
-        /* --- HEADER & HERO --- */
-        header {
-            padding: 2rem;
-            text-align: center;
-            background: rgba(0,0,0,0.3);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(212, 175, 55, 0.3);
-            position: sticky;
+        /* --- NAVBAR --- */
+        .navbar {
+            position: fixed; /* ติดขอบบนตลอด */
             top: 0;
-            z-index: 100;
+            left: 0;
+            width: 100%;
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--glass-nav);
+            backdrop-filter: blur(10px); /* เอฟเฟกต์เบลอ */
+            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+            z-index: 1000;
+            transition: 0.3s;
         }
 
-        .logo {
-            font-size: 2rem;
+        /* Logo Area */
+        .nav-logo {
+            font-size: 1.8rem;
             color: var(--accent-gold);
-            letter-spacing: 3px;
             font-weight: 700;
-            text-transform: uppercase;
+            letter-spacing: 2px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
+        .nav-logo i {
+            font-size: 1.5rem;
+        }
+
+        /* Menu Links */
+        .nav-menu {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-link {
+            color: var(--text-light);
+            font-size: 1rem;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-link:hover {
+            color: var(--accent-gold);
+        }
+
+        /* ขีดเส้นใต้เมื่อเอาเมาส์ชี้ */
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background: var(--accent-gold);
+            bottom: -5px;
+            left: 0;
+            transition: width 0.3s;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        /* --- HERO SECTION --- */
         .hero {
-            height: 80vh;
+            height: 100vh; /* เต็มหน้าจอ */
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
-            background: url('https://images.unsplash.com/photo-1590487372296-68195861445b?q=80&w=1920&auto=format&fit=crop') no-repeat center center/cover;
-            position: relative;
-        }
-
-        .hero::after {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(15, 32, 39, 0.7); /* Overlay ให้ตัวหนังสือเด่น */
+            /* เปลี่ยนรูป Background ตรงนี้ */
+            background: linear-gradient(rgba(15,32,39,0.5), rgba(15,32,39,0.7)),
+                        url('https://images.unsplash.com/photo-1590487372296-68195861445b?q=80&w=1920&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed; /* Parallax effect */
+            padding-top: 60px; /* เว้นที่ให้ Navbar */
         }
 
         .hero-content {
-            position: relative;
             z-index: 1;
             max-width: 800px;
             padding: 20px;
@@ -83,15 +136,35 @@
         }
 
         .hero h1 {
-            font-size: 4rem;
+            font-size: 4.5rem;
             color: var(--accent-gold);
             margin-bottom: 1rem;
+            line-height: 1.1;
         }
 
         .hero p {
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             color: var(--text-light);
             font-weight: 300;
+            margin-bottom: 2rem;
+        }
+
+        .cta-btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: transparent;
+            border: 2px solid var(--accent-gold);
+            color: var(--accent-gold);
+            font-family: 'Prompt', sans-serif;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: 0.3s;
+            border-radius: 50px;
+        }
+
+        .cta-btn:hover {
+            background: var(--accent-gold);
+            color: var(--primary-bg);
         }
 
         /* --- INFOGRAPHIC STATS --- */
@@ -102,6 +175,8 @@
             background: var(--secondary-bg);
             padding: 3rem 10%;
             border-bottom: 1px solid var(--accent-gold);
+            position: relative;
+            z-index: 2;
         }
 
         .stat-item {
@@ -131,7 +206,7 @@
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 4rem 20px;
+            padding: 6rem 20px; /* เพิ่ม Padding บน เพื่อไม่ให้หัวข้อชิดเกินไป */
         }
 
         .section-title {
@@ -139,6 +214,16 @@
             font-size: 2.5rem;
             margin-bottom: 3rem;
             color: var(--accent-gold);
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 3px;
+            background: var(--accent-gold);
+            margin: 10px auto 0;
         }
 
         /* Filters */
@@ -173,12 +258,11 @@
         }
 
         .card {
-            background: var(--glass);
+            background: var(--glass-card);
             border: 1px solid rgba(255,255,255,0.1);
             border-radius: 15px;
             overflow: hidden;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
-            position: relative;
         }
 
         .card:hover {
@@ -188,31 +272,40 @@
         }
 
         .card-img {
-            height: 200px;
+            height: 220px;
             width: 100%;
             object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .card:hover .card-img {
+            transform: scale(1.05); /* Zoom ภาพเล็กน้อยเมื่อชี้ */
         }
 
         .card-body {
-            padding: 20px;
+            padding: 25px;
         }
 
         .card-tag {
-            font-size: 0.7rem;
+            font-size: 0.75rem;
             text-transform: uppercase;
             letter-spacing: 1px;
             color: var(--accent-gold);
-            margin-bottom: 10px;
-            display: block;
+            background: rgba(212, 175, 55, 0.1);
+            padding: 4px 8px;
+            border-radius: 4px;
+            display: inline-block;
+            margin-bottom: 12px;
         }
 
         .card-title {
-            font-size: 1.4rem;
+            font-size: 1.5rem;
             margin-bottom: 10px;
+            color: #fff;
         }
 
         .card-desc {
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             color: var(--text-gray);
             margin-bottom: 20px;
             display: -webkit-box;
@@ -222,24 +315,23 @@
         }
 
         .btn-more {
-            display: inline-block;
-            padding: 8px 0;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
             color: var(--accent-gold);
-            text-decoration: none;
-            border-bottom: 1px solid transparent;
-            transition: 0.3s;
             cursor: pointer;
+            transition: 0.3s;
         }
 
         .btn-more:hover {
-            border-bottom: 1px solid var(--accent-gold);
+            gap: 10px; /* ลูกศรขยับ */
         }
 
         /* --- MODAL --- */
         .modal {
             display: none;
             position: fixed;
-            z-index: 1000;
+            z-index: 2000;
             left: 0;
             top: 0;
             width: 100%;
@@ -247,18 +339,19 @@
             background-color: rgba(0,0,0,0.9);
             justify-content: center;
             align-items: center;
+            padding: 20px;
         }
 
         .modal-content {
-            background: var(--secondary-bg);
+            background: #1a2a30;
             padding: 40px;
-            border-radius: 10px;
-            max-width: 600px;
-            width: 90%;
+            border-radius: 15px;
+            max-width: 700px;
+            width: 100%;
             border: 1px solid var(--accent-gold);
             position: relative;
-            text-align: center;
             animation: zoomIn 0.3s;
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.2);
         }
 
         .close-btn {
@@ -268,19 +361,26 @@
             font-size: 30px;
             color: var(--text-gray);
             cursor: pointer;
+            transition: 0.3s;
         }
+        
+        .close-btn:hover { color: #fff; }
 
-        .modal-title {
-            color: var(--accent-gold);
-            margin-bottom: 15px;
-        }
-
+        /* Footer */
         footer {
             text-align: center;
-            padding: 2rem;
-            background: #000;
-            font-size: 0.8rem;
+            padding: 3rem 1rem;
+            background: #050b0e;
             color: var(--text-gray);
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .navbar { padding: 1rem 20px; }
+            .nav-menu { display: none; } /* ซ่อนเมนูบนมือถือ (แบบง่าย) */
+            .hero h1 { font-size: 3rem; }
+            .stats-bar { gap: 30px; }
         }
 
         /* Animations */
@@ -289,31 +389,35 @@
             to { opacity: 1; transform: translateY(0); }
         }
         @keyframes zoomIn {
-            from { transform: scale(0.8); opacity: 0; }
+            from { transform: scale(0.9); opacity: 0; }
             to { transform: scale(1); opacity: 1; }
-        }
-
-        /* Mobile Responsive */
-        @media (max-width: 768px) {
-            .hero h1 { font-size: 2.5rem; }
-            .stats-bar { flex-direction: column; gap: 20px; }
         }
     </style>
 </head>
 <body>
 
-    <header>
-        <div class="logo">YALA LUXE</div>
-    </header>
+    <nav class="navbar">
+        <a href="#" class="nav-logo">
+            <i class="fas fa-gem"></i> YALA LUXE
+        </a>
+        
+        <ul class="nav-menu">
+            <li><a href="#home" class="nav-link">หน้าหลัก</a></li>
+            <li><a href="#attractions" class="nav-link">สถานที่ท่องเที่ยว</a></li>
+            <li><a href="#stats" class="nav-link">ข้อมูลทั่วไป</a></li>
+            <li><a href="#contact" class="nav-link">ติดต่อเรา</a></li>
+        </ul>
+    </nav>
 
-    <section class="hero">
+    <section id="home" class="hero">
         <div class="hero-content">
-            <h1>ยะลา<br><span style="font-size: 0.5em; font-family: 'Prompt';">ใต้สุดสยาม เมืองงามชายแดน</span></h1>
-            <p>สัมผัสเสน่ห์แห่งขุนเขา ทะเลหมอก และวัฒนธรรมที่ผสมผสานอย่างลงตัว</p>
+            <h1>YALA<br><span style="font-size: 0.4em; font-family: 'Prompt'; font-weight: 300;">ใต้สุดสยาม เมืองงามชายแดน</span></h1>
+            <p>สัมผัสเสน่ห์แห่งขุนเขา ทะเลหมอก และวัฒนธรรมที่ผสมผสานอย่างลงตัวในดินแดนปลายด้ามขวาน</p>
+            <a href="#attractions" class="cta-btn">เริ่มการค้นหา</a>
         </div>
     </section>
 
-    <div class="stats-bar">
+    <div id="stats" class="stats-bar">
         <div class="stat-item">
             <i class="fas fa-mountain"></i>
             <span class="stat-number">365</span>
@@ -331,7 +435,7 @@
         </div>
     </div>
 
-    <section class="container">
+    <section id="attractions" class="container">
         <h2 class="section-title">สถานที่ท่องเที่ยวยอดนิยม</h2>
         
         <div class="filters">
@@ -344,97 +448,103 @@
             </div>
     </section>
 
-    <footer>
-        <p>&copy; 2024 Yala Tourism Infographic Project. Created for Educational Purpose.</p>
+    <footer id="contact">
+        <div class="nav-logo" style="justify-content: center; margin-bottom: 20px;">
+            <i class="fas fa-gem"></i> YALA LUXE
+        </div>
+        <p>พัฒนาขึ้นเพื่อการศึกษาและการประชาสัมพันธ์การท่องเที่ยวจังหวัดยะลา</p>
+        <p style="margin-top: 10px; font-size: 0.8rem; opacity: 0.6;">&copy; 2024 Yala Tourism Project. All Rights Reserved.</p>
     </footer>
 
     <div id="infoModal" class="modal">
         <div class="modal-content">
             <span class="close-btn" onclick="closeModal()">&times;</span>
-            <h2 id="modalTitle" class="modal-title"></h2>
-            <img id="modalImg" src="" style="width:100%; height:200px; object-fit:cover; border-radius:5px; margin-bottom:15px;">
-            <p id="modalDesc"></p>
+            <h2 id="modalTitle" class="modal-title" style="color: var(--accent-gold); margin-bottom: 10px;"></h2>
+            <img id="modalImg" src="" style="width:100%; height:250px; object-fit:cover; border-radius:8px; margin-bottom:15px; border:1px solid #333;">
+            <p id="modalDesc" style="color: #ddd; line-height: 1.8;"></p>
             <br>
-            <button class="filter-btn" style="width: 100%;">วางแผนการเดินทาง</button>
+            <button class="filter-btn" style="width: 100%; margin-top: 10px;">นำทางผ่าน Google Maps</button>
         </div>
     </div>
 
     <script>
-        // Data Set: ข้อมูลสถานที่ท่องเที่ยว (จำลอง JSON)
+        // Data Set
         const attractions = [
             {
                 id: 1,
                 name: "สกายวอล์ค อัยเยอร์เวง",
                 category: "nature",
-                desc: "จุดชมวิวทะเลหมอกที่สวยที่สุดในภาคใต้ ยื่นยาวออกไปในอากาศ ให้คุณสัมผัสหมอกได้แบบ 360 องศา",
+                desc: "แลนด์มาร์คสำคัญของเบตง ทางเดินกระจกใสยื่นออกไปในอากาศเหนือระดับน้ำทะเลกว่า 2,000 ฟุต ให้คุณชมทะเลหมอกหนานุ่มได้ตลอดทั้งปีแบบ 360 องศา พร้อมชมพระอาทิตย์ขึ้นยามเช้าที่สวยงามที่สุดแห่งหนึ่งในไทย",
                 img: "https://images.unsplash.com/photo-1596716075150-14e304677716?q=80&w=800&auto=format&fit=crop"
             },
             {
                 id: 2,
                 name: "อุโมงค์เบตงมงคลฤทธิ์",
                 category: "culture",
-                desc: "อุโมงค์รถยนต์ลอดภูเขาแห่งแรกของประเทศไทย สัญลักษณ์แห่งความแข็งแกร่งและความงามยามค่ำคืน",
-                img: "https://thailandtourismdirectory.go.th/assets/upload/2017/11/14/201711140df031835928d32215c2020227916327154215.jpg" // Placeholder URL
+                desc: "อุโมงค์รถยนต์ลอดภูเขาแห่งแรกของประเทศไทย ก่อสร้างด้วยคอนกรีตเสริมเหล็ก ตกแต่งด้วยไฟประดับหลากสีสันยามค่ำคืน เป็นจุดเช็คอินที่สะท้อนถึงวิศวกรรมและความเจริญของเมืองเบตง",
+                img: "https://thailandtourismdirectory.go.th/assets/upload/2017/11/14/201711140df031835928d32215c2020227916327154215.jpg"
             },
             {
                 id: 3,
                 name: "เขื่อนบางลาง",
                 category: "nature",
-                desc: "ล่องแพชมธรรมชาติ ผืนป่าฮาลา-บาลา ที่ได้รับสมญานามว่าอเมซอนแห่งอาเซียน",
-                img: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=800&auto=format&fit=crop" // Placeholder
+                desc: "เขื่อนเอนกประสงค์แห่งแรกของภาคใต้ ล้อมรอบด้วยผืนป่าฮาลา-บาลา ที่สมบูรณ์จนได้รับฉายา 'อเมซอนแห่งอาเซียน' กิจกรรมยอดนิยมคือการล่องแพชมธรรมชาติและดูนกเงือก",
+                img: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=800&auto=format&fit=crop"
             },
             {
                 id: 4,
                 name: "วัดคูหาภิมุข (วัดหน้าถ้ำ)",
                 category: "culture",
-                desc: "สักการะพระพุทธไสยาสน์สมัยศรีวิชัย ภายในถ้ำที่สวยงามและเงียบสงบ",
-                img: "https://images.unsplash.com/photo-1564654920677-4c3d40801876?q=80&w=800&auto=format&fit=crop" // Placeholder
+                desc: "ปูชนียสถานที่สำคัญของยะลา ภายในถ้ำมืดเป็นที่ประดิษฐาน 'พ่อท่านบรรทม' พระพุทธรูปปางไสยาสน์ขนาดใหญ่ สมัยศรีวิชัย พุทธศตวรรษที่ 13 บรรยากาศภายในเย็นสบายและขลัง",
+                img: "https://images.unsplash.com/photo-1564654920677-4c3d40801876?q=80&w=800&auto=format&fit=crop"
             },
             {
                 id: 5,
                 name: "สวนไม้ดอกเมืองหนาวเบตง",
                 category: "nature",
-                desc: "สวนดอกไม้นานาพันธุ์ท่ามกลางหุบเขา อากาศเย็นสบายตลอดทั้งปี",
+                desc: "สวนพฤกษศาสตร์ท่ามกลางหุบเขาในโครงการตามพระราชดำริฯ ด้วยสภาพอากาศที่เย็นสบายตลอดปี ทำให้สามารถปลูกดอกไม้เมืองหนาวนานาชนิดได้งดงามราวกับอยู่ต่างประเทศ",
                 img: "https://images.unsplash.com/photo-1490750967868-58cb75069ed6?q=80&w=800&auto=format&fit=crop"
             },
             {
                 id: 6,
                 name: "Street Art เบตง",
                 category: "culture",
-                desc: "เดินชมงานศิลปะบนผนังตึก เล่าเรื่องราววิถีชีวิตชาวเบตงที่น่ารักและอบอุ่น",
-                img: "https://images.unsplash.com/photo-1580130601275-62a6911e2dc8?q=80&w=800&auto=format&fit=crop" // Placeholder
+                desc: "ผลงานศิลปะบนกำแพงรอบเมืองเบตง บอกเล่าเรื่องราววิถีชีวิตพหุวัฒนธรรม อาหารการกิน และประวัติศาสตร์ของชาวไทย จีน และมุสลิม ที่อยู่ร่วมกันอย่างสันติสุข",
+                img: "https://images.unsplash.com/photo-1580130601275-62a6911e2dc8?q=80&w=800&auto=format&fit=crop"
             }
         ];
 
-        // Function: Render Cards
+        // Render Cards
         function renderCards(data) {
             const grid = document.getElementById('contentGrid');
-            grid.innerHTML = ''; // Clear existing
+            grid.innerHTML = '';
             
-            data.forEach(item => {
+            data.forEach((item, index) => {
                 const card = document.createElement('div');
                 card.className = 'card';
+                // Animation delay for cascading effect
+                card.style.animation = `fadeInUp 0.5s ease forwards ${index * 0.1}s`;
                 card.innerHTML = `
                     <img src="${item.img}" alt="${item.name}" class="card-img">
                     <div class="card-body">
                         <span class="card-tag">${item.category === 'nature' ? 'ธรรมชาติ' : 'วัฒนธรรม'}</span>
                         <h3 class="card-title">${item.name}</h3>
                         <p class="card-desc">${item.desc}</p>
-                        <span class="btn-more" onclick="openModal(${item.id})">ดูรายละเอียด <i class="fas fa-arrow-right"></i></span>
+                        <div class="btn-more" onclick="openModal(${item.id})">
+                            อ่านเพิ่มเติม <i class="fas fa-arrow-right"></i>
+                        </div>
                     </div>
                 `;
                 grid.appendChild(card);
             });
         }
 
-        // Function: Filter Logic
+        // Filter Function
         function filterData(category) {
-            // Update Active Button
             const buttons = document.querySelectorAll('.filter-btn');
             buttons.forEach(btn => btn.classList.remove('active'));
             event.target.classList.add('active');
 
-            // Filter Data
             if (category === 'all') {
                 renderCards(attractions);
             } else {
@@ -443,16 +553,15 @@
             }
         }
 
-        // Function: Modal Logic
+        // Modal Functions
         const modal = document.getElementById('infoModal');
         
         function openModal(id) {
             const item = attractions.find(p => p.id === id);
             if(item) {
                 document.getElementById('modalTitle').innerText = item.name;
-                document.getElementById('modalDesc').innerText = item.desc + " เป็นสถานที่ที่เหมาะแก่การพักผ่อนและถ่ายรูป...";
-                // ในการใช้งานจริง เปลี่ยน src รูปภาพตรงนี้ให้เป็นรูปใหญ่
-                document.getElementById('modalImg').src = item.img; 
+                document.getElementById('modalDesc').innerText = item.desc;
+                document.getElementById('modalImg').src = item.img;
                 modal.style.display = "flex";
             }
         }
@@ -461,7 +570,6 @@
             modal.style.display = "none";
         }
 
-        // Close modal when clicking outside
         window.onclick = function(event) {
             if (event.target == modal) {
                 modal.style.display = "none";
@@ -470,7 +578,6 @@
 
         // Initialize
         renderCards(attractions);
-
     </script>
 </body>
 </html>
